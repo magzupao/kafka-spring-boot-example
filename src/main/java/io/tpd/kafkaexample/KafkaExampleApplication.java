@@ -34,7 +34,6 @@ public class KafkaExampleApplication {
     private String topicName;
 
     // Producer configuration
-
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>(kafkaProperties.buildProducerProperties());
@@ -61,9 +60,6 @@ public class KafkaExampleApplication {
     }
 
     // Consumer configuration
-
-    // If you only need one kind of deserialization, you only need to set the
-    // Consumer configuration properties. Uncomment this and remove all others below.
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>(kafkaProperties.buildConsumerProperties());
@@ -74,7 +70,7 @@ public class KafkaExampleApplication {
         return props;
     }
 
-// magz
+// magz - otros consumer
 /*
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
@@ -93,26 +89,6 @@ public class KafkaExampleApplication {
 
         return factory;
     }
-*/
-    // String Consumer Configuration
-
-    @Bean
-    public ConsumerFactory<String, String> stringConsumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(
-                kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new StringDeserializer()
-        );
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerStringContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(stringConsumerFactory());
-
-        return factory;
-    }
-
-    // Byte Array Consumer Configuration
 
     @Bean
     public ConsumerFactory<String, byte[]> byteArrayConsumerFactory() {
@@ -120,7 +96,7 @@ public class KafkaExampleApplication {
                 kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new ByteArrayDeserializer()
         );
     }
-/*
+
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, byte[]> kafkaListenerByteArrayContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, byte[]> factory =

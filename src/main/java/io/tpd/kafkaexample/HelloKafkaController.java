@@ -43,19 +43,10 @@ public class HelloKafkaController {
                 .forEach(i -> this.template.send(topicName, String.valueOf(i),
                         new PracticalAdvice(" ** A Practical Advice ** ", i))
                 );
-        latch.await(60, TimeUnit.SECONDS);
+        latch.await(10, TimeUnit.SECONDS);
         logger.info("All messages received");
         return "Hello Kafka!";
     }
-
-/*    @KafkaListener(topics = "advice-topic", clientIdPrefix = "json",
-            containerFactory = "kafkaListenerContainerFactory")
-    public void listenAsObject(ConsumerRecord<String, PracticalAdvice> cr,
-                               @Payload PracticalAdvice payload) {
-        logger.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
-                typeIdHeader(cr.headers()), payload, cr.toString());
-        latch.countDown();
-    }*/
 
     @KafkaListener(topics = "advice-topic", clientIdPrefix = "string",
             containerFactory = "kafkaListenerStringContainerFactory")
@@ -66,14 +57,24 @@ public class HelloKafkaController {
         latch.countDown();
     }
 
-/*    @KafkaListener(topics = "advice-topic", clientIdPrefix = "bytearray",
+/*    @KafkaListener(topics = "advice-topic", clientIdPrefix = "json",
+            containerFactory = "kafkaListenerContainerFactory")
+    public void listenAsObject(ConsumerRecord<String, PracticalAdvice> cr,
+                               @Payload PracticalAdvice payload) {
+        logger.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
+                typeIdHeader(cr.headers()), payload, cr.toString());
+        latch.countDown();
+    }
+
+    @KafkaListener(topics = "advice-topic", clientIdPrefix = "bytearray",
             containerFactory = "kafkaListenerByteArrayContainerFactory")
     public void listenAsByteArray(ConsumerRecord<String, byte[]> cr,
                                   @Payload byte[] payload) {
         logger.info("Logger 3 [ByteArray] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
                 typeIdHeader(cr.headers()), payload, cr.toString());
         latch.countDown();
-    }*/
+    }
+*/
 
     private static String typeIdHeader(Headers headers) {
         return StreamSupport.stream(headers.spliterator(), false)
