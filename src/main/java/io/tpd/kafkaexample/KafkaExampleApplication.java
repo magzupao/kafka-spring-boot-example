@@ -37,12 +37,11 @@ public class KafkaExampleApplication {
 
     @Bean
     public Map<String, Object> producerConfigs() {
-        Map<String, Object> props =
-                new HashMap<>(kafkaProperties.buildProducerProperties());
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                JsonSerializer.class);
+        Map<String, Object> props = new HashMap<>(kafkaProperties.buildProducerProperties());
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "tpd-loggers");
+
         return props;
     }
 
@@ -67,15 +66,10 @@ public class KafkaExampleApplication {
     // Consumer configuration properties. Uncomment this and remove all others below.
     @Bean
     public Map<String, Object> consumerConfigs() {
-        Map<String, Object> props = new HashMap<>(
-                kafkaProperties.buildConsumerProperties()
-        );
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                JsonDeserializer.class);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG,
-                "tpd-loggers");
+        Map<String, Object> props = new HashMap<>(kafkaProperties.buildConsumerProperties());
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "tpd-loggers");
 
         return props;
     }
