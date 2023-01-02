@@ -99,7 +99,7 @@ public class KafkaExampleApplication {
 
         return factory;
     }
-
+*/
     // String Consumer Configuration
 
     @Bean
@@ -126,7 +126,7 @@ public class KafkaExampleApplication {
                 kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new ByteArrayDeserializer()
         );
     }
-
+/*
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, byte[]> kafkaListenerByteArrayContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, byte[]> factory =
