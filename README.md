@@ -27,3 +27,9 @@ Give a star to this project, and consider some extra readings:
 * [My practical book about building a microservices architecture from scratch](https://amzn.to/3nADn4q).
 * [The Full Reactive Stack Guide](https://leanpub.com/full-reactive/).
 * [The Practical Architecture Guide](https://leanpub.com/practical-software-architecture).
+
+
+
+
+
+
