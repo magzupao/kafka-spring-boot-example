@@ -19,8 +19,7 @@ import java.util.stream.StreamSupport;
 @RestController
 public class HelloKafkaController {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(HelloKafkaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelloKafkaController.class);
 
     private final KafkaTemplate<String, Object> template;
     private final String topicName;
@@ -48,7 +47,7 @@ public class HelloKafkaController {
         return "Hello Kafka!";
     }
 
-    @KafkaListener(topics = "advice-topic", clientIdPrefix = "string",
+    @KafkaListener(topics = "advice-topic", groupId = "tpd-loggers", clientIdPrefix = "string",
             containerFactory = "kafkaListenerStringContainerFactory")
     public void listenasString(ConsumerRecord<String, String> cr,
                                @Payload String payload) {
