@@ -38,8 +38,7 @@ public class KafkaExampleApplication {
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>(kafkaProperties.buildProducerProperties());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return props;
     }
 
@@ -58,25 +57,6 @@ public class KafkaExampleApplication {
         return new NewTopic(topicName, 3, (short) 1);
     }
 
-    // consumer
-    @Bean
-    public ConsumerFactory<String, String> stringConsumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(
-                kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new StringDeserializer()
-        );
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerStringContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(stringConsumerFactory());
-
-        return factory;
-    }
-
-// magz - otros consumer
-/*
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
         final JsonDeserializer<Object> jsonDeserializer = new JsonDeserializer<>();
@@ -94,20 +74,4 @@ public class KafkaExampleApplication {
 
         return factory;
     }
-
-    @Bean
-    public ConsumerFactory<String, byte[]> byteArrayConsumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(
-                kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new ByteArrayDeserializer()
-        );
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, byte[]> kafkaListenerByteArrayContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, byte[]> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(byteArrayConsumerFactory());
-        return factory;
-    }
-*/
 }
